@@ -1,0 +1,28 @@
+Common format:
+
+Let the format from which algos derive their own be called the common format.
+Let 'data' be a variable in the common format, then
+
+data is a struct array of length num_data
+Each data(i) has the fields:
+data(i).costs: Library trajectory costs. Array of size num_library x 1
+data(i).lib_contexts: Library environment contexts. Array of size num_library x context_dimension
+data(i).query_contexts: Query environment contexts. Array of size num_library x context_dimension
+
+
+****************************************************************************************************
+
+Clustering:
+
+Dissimilar should be chosen from some threshold of cost not all nonmaximum seeds.
+
+****************************************************************************************************
+
+CS Classification:
+
+features is a cell array of length n. features{i} is an array of size num lib x dim features
+costs is an array of size num instances x num lib
+
+****************************************************************************************************
+
+check input data

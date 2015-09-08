@@ -1,0 +1,4 @@
+Ranking error: 9.886905
+Evaluation error: 0.120606
+
+with thresh 0.5 ones vs all
