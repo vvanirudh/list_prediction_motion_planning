@@ -4,7 +4,7 @@ clear;
 close all;
 
 %% Which set do you want to run it for?
-set = 1;
+set = 2;
 
 %% 
 global_dataset = getenv('DATASET');
@@ -17,6 +17,14 @@ switch(set)
         lambda = 1e-3;
         threshold = 0; %local minima in thresh
         fail_thresh = 17.9;
+    case 2
+        %% Set 2: Heuristic Learning
+        fprintf('Heuristic dataset \n');
+        train_folder = strcat(global_dataset, 'heuristic_dataset/train_data.mat');
+        validation_folder = strcat(global_dataset, 'heuristic_dataset/validation_data.mat');
+        lambda = 1e-3;
+        threshold = 0; %local minima in thresh
+        fail_thresh = 9.9;
 end
 
 %% train
