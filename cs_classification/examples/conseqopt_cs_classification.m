@@ -14,7 +14,12 @@ switch(set)
         fprintf('2D Optimization dataset\n');
         train_folder = strcat(global_dataset, '2d_optimization_dataset/train_data.mat');
         validation_folder = strcat(global_dataset, '2d_optimization_dataset/validation_data.mat');
-        lambda = 1e-3;
+        test_folder = strcat(global_dataset, '2d_optimization_dataset/test_data.mat');
+
+        lambda = 1e3;  
+        %Validation statistics:
+        %hinge: lambda 1e3 Budget 1: 0.1155 Budget 3: 0.0654  
+        %square: lambda 1e2 Budget 1: 0.1172 Budget 3: 0.0662
         threshold = 0; %1.4; %local minima in thresh
         %fail_thresh = 1.6;
     case 2
@@ -74,8 +79,8 @@ C_sum = sum(C,2);
 fraction_classified = sum(C_sum == 0)/size(C,1);
 fprintf('DEBUG: Fraction correctly classified at level %d: %.2f.\n',B,fraction_classified);
 fraction_classified_list(end) = fraction_classified;
-	
-%% test 
+return
+%% Validation
 load(validation_folder);
 S = predict_list_cs_classification(validation_data,weights_list,mode);
 level_losses = evaluate_level_losses(validation_data,S,submodular_fn_params);
@@ -85,4 +90,16 @@ end
 
 [e1,e2] = evaluate_list_prediction(validation_data,S);
 fprintf('Evaluation error: %f %f\n', e1, e2);
+
+%% Test
+% fprintf('Test data!!');
+% load(test_folder);
+% S = predict_list_cs_classification(test_data,weights_list,mode);
+% level_losses = evaluate_level_losses(test_data,S,submodular_fn_params);
+% for k = 1:length(level_losses)
+% 	fprintf('DEBUG: Loss at level %d: %.2f.\n',k,level_losses(k));
+% end
+% 
+% [e1,e2] = evaluate_list_prediction(test_data,S);
+% fprintf('Evaluation error: %f %f\n', e1, e2);
 
