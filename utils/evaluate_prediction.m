@@ -4,10 +4,8 @@ function [mean_error, std_error] = evaluate_prediction( test_data, selected_idx 
 
 error = [];
 for i = 1:length(test_data)
-    error = [error (test_data(i).costs(selected_idx(i)) - min(test_data(i).costs))/(max(test_data(i).costs) - min(test_data(i).costs))];
+    error = [error (test_data(i).costs(selected_idx(i)) - min(test_data(i).costs))];
 end
-
-error
 
 mean_error = mean(error);
 std_error = std(error);

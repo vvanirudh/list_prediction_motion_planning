@@ -4,29 +4,32 @@ clc;
 close all;
 
 set = 2;
+B = 1; % budget length
+
+
+global_dataset = getenv('DATASET');
 switch(set)
     case 1
         %% Set 1: 2D planning dataset
         fprintf('2D dataset\n');
-        train_folder = '../../dataset/processed_dataset/train_data.mat';
-        validation_folder = '../../dataset/processed_dataset/validation_data.mat';
-		lambda = 1;
-        threshold = 1.4; %local minima in thresh
-		fail_thresh = 1.6;
-	case 2
+        train_folder = strcat(global_dataset, '2d_planner_dataset/train_data.mat');
+        validation_folder = strcat(global_dataset, '2d_planner_dataset/validation_data.mat');
+        lambda = 1e-3;
+        threshold = 0; %1.4; %local minima in thresh
+        %fail_thresh = 1.6;
+    case 2
         %% Set 2: Grasp dataset
         fprintf('Grasp dataset\n');
-        train_folder = '../../grasp_dataset/train_data.mat';
-        validation_folder = '../../grasp_dataset/validation_data.mat';
-        lambda = 1;
-        threshold = 20; % basically working only on unsolvable problems ...
-        fail_thresh = 39;
+        train_folder = strcat(global_dataset, 'grasp_dataset/train_data.mat');
+        validation_folder = strcat(global_dataset, 'grasp_dataset/validation_data.mat');
+        lambda = 1e-3;
+        threshold = 0; %20; % basically working only on unsolvable problems ...
+        %fail_thresh = 39;
 end
 
 %% train
 load(train_folder);
 N = length(train_data); % number of environments
-B = 3; % budget length
 beta_list = cell(1,B); % set of regressors
 C_list = cell(1,B); % set of (relative to best choice at budget level) losses
 features_list = cell(1,B); % set of features 
@@ -90,12 +93,8 @@ level_losses = evaluate_level_losses(validation_data,S,submodular_fn_params);
 for k = 1:length(level_losses)
 	fprintf('Loss at level %d: %.2f.\n',k,level_losses(k));
 end
-[mean_f,std_f] = evaluate_list_prediction(validation_data,S,submodular_fn_params);
-fprintf('submodular f: %f %f\n', mean_f, std_f);
-[e1,e2] = error_list_prediction(validation_data,S);
+
+[e1,e2] = evaluate_list_prediction(validation_data,S);
 fprintf('Evaluation error: %f %f\n', e1, e2);
 
-[failure] = failure_list_prediction( validation_data, S, fail_thresh);
-for k = 1:length(failure)
-    fprintf('Fraction failed: %f\n', failure(k));
-end
+

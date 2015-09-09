@@ -1,4 +1,4 @@
-function [w, obj, wset] = train_linear_primal_sg(features,costs,lambda,w0)
+function [w, obj, wset] = train_linear_primal_sg(features,costs, lambda, surrogate_loss, w0)
 %TRAIN_LINEAR_SCORER
 % 
 % weights = TRAIN_LINEAR_SCORER(features,costs,lambda)
@@ -27,8 +27,16 @@ end
 c = reshape(costs', [], 1);
 
 %Criterion
-g = @(w) c'*hinge_loss(f*w) + 0.5*lambda*w'*w;
-nonsmooth_grad = @(w) hinge_comp_grad(w, f, c);
+if (strcmp(surrogate_loss, 'hinge'))
+    g = @(w) c'*hinge_loss(f*w) + 0.5*lambda*w'*w;
+    nonsmooth_grad = @(w) hinge_comp_grad(w, f, c);
+elseif (strcmp(surrogate_loss, 'square'))
+    g = @(w) c'*((1 + f*w).^2) + 0.5*lambda*w'*w;
+    nonsmooth_grad = @(w) squared_grad(w, f, c);
+else
+    error('No surrogate loss specified');
+end
+    
 
 % g = @(w) c'*abs(1+f*w) + 0.5*lambda*w'*w;
 % nonsmooth_grad = @(w) l1_comp_grad(w, f, c);
@@ -36,11 +44,10 @@ nonsmooth_grad = @(w) hinge_comp_grad(w, f, c);
 %  g = @(w) c'*((hinge_loss(f*w)).^2) + 0.5*lambda*w'*w;
 %  nonsmooth_grad = @(w) squared_hinge_comp_grad(w, f, c);
 
-% g = @(w) c'*((1 + f*w).^2) + 0.5*lambda*w'*w;
-% nonsmooth_grad = @(w) squared_grad(w, f, c);
+
 
 num_iter = 1000;
-if (nargin <= 3)
+if (nargin <= 4)
     w0 = zeros(dim_features, 1);
 end
 w = w0;

@@ -4,7 +4,9 @@ clear;
 close all;
 
 %% Which set do you want to run it for?
-set = 2;
+set = 1;
+B = 2; % budget length
+surrogate_loss = 'square';
 
 %% 
 global_dataset = getenv('DATASET');
@@ -31,7 +33,6 @@ end
 load(train_folder);
 
 N = length(train_data); % number of environments
-B = 3; % budget length
 weights_list = cell(1,B); % set of classifiers
 C_list = cell(1,B); % set of (relative to best choice at budget level) losses
 fraction_classified_list = zeros(1,B);
@@ -54,8 +55,8 @@ for k = 1:B
 	% get features for level k
 	% train level k
 	% this function centers features
-    [weights, obj, wset] = train_multi_linear_primal_sg_hinge(features,C,lambda);
-
+    [weights, obj, wset] = train_multi_linear_primal_sg_hinge(features,C,lambda,surrogate_loss);
+    %[weights, obj, wset] = bullshit(features, C, lambda);
 	% prediction at level k
 	[S(:,k),~] = multi_linear_scorer_predict(features,weights);
 
@@ -80,12 +81,7 @@ level_losses = evaluate_level_losses(validation_data,S,submodular_fn_params);
 for k = 1:length(level_losses)
 	fprintf('Loss at level %d: %.2f.\n',k,level_losses(k));
 end
-[mean_f,std_f] = evaluate_list_prediction(validation_data,S,submodular_fn_params);
-fprintf('submodular f: %f %f\n', mean_f, std_f);
-[e1,e2] = error_list_prediction(validation_data,S);
+
+[e1,e2] = evaluate_list_prediction(validation_data,S);
 fprintf('Evaluation error: %f %f\n', e1, e2);
 
-[failure] = failure_list_prediction( validation_data, S, fail_thresh);
-for k = 1:length(failure)
-    fprintf('Fraction failed: %f\n', failure(k));
-end
