@@ -1,15 +1,15 @@
 % initialize
 % all parameters should be set in this block
-% clc;
+clc;
 clear;
 close all;
 
-set = 1;
-B = 3; % budget length
+set = 2;
+B = 2; % budget length
 surrogate_loss = 'hinge';
 % choices for features
-features_choice_struct.append_lib_contexts = false;
-features_choice_struct.append_down_levels = true;
+features_choice_struct.append_lib_contexts = 0;
+features_choice_struct.append_down_levels = 1;
 features_choice_struct.append_type = 'averaging'; % {differencing,averaging}
 
 global_dataset = getenv('DATASET');

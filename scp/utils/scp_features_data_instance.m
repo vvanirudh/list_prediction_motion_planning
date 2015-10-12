@@ -1,19 +1,14 @@
-function features = scp_features_data_instance(data_instance,prev_slot_features,S,mode)
+function features = scp_features_data_instance(data_instance,prev_slot_features,S,choices)
 % data_instance is a struct 
 % prev_slot_features is cell of size [1,K]. prev_slot_features{i} is [L,d]
 % S is of size [1,K]
 % mode is type of features
 % features is [L,d]
 
-switch mode
-	case 'lib'
-		simple_features = data_instance.lib_contexts;
-	case 'query'
-		simple_features = data_instance.query_contexts;
-	case 'libquery'
-		simple_features = [data_instance.query_contexts data_instance.lib_contexts];
-	otherwise
-		error('INVALID CHOICE');
+if choices.append_lib_contexts
+    simple_features = [data_instance.query_contexts data_instance.lib_contexts];
+else
+    simple_features = data_instance.query_contexts;
 end
 
 [L,d1] = size(simple_features);
