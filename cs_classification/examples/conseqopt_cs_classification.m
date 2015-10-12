@@ -1,16 +1,21 @@
 % initialize
-clc;
+% all parameters should be set in this block
+% clc;
 clear;
 close all;
 
 set = 1;
 B = 3; % budget length
 surrogate_loss = 'hinge';
+% choices for features
+features_choice_struct.append_lib_contexts = false;
+features_choice_struct.append_down_levels = true;
+features_choice_struct.append_type = 'averaging'; % {differencing,averaging}
 
 global_dataset = getenv('DATASET');
 switch(set)
     case 1
-        %% Set 1: 2D planning dataset
+        % Set 1: 2D planning dataset
         fprintf('2D Optimization dataset\n');
         train_folder = strcat(global_dataset, '2d_optimization_dataset/train_data.mat');
         validation_folder = strcat(global_dataset, '2d_optimization_dataset/validation_data.mat');
@@ -23,11 +28,11 @@ switch(set)
         threshold = 0; %1.4; %local minima in thresh
         %fail_thresh = 1.6;
     case 2
-        %% Set 2: Grasp dataset
+        % Set 2: Grasp dataset
         fprintf('Grasp dataset\n');
         train_folder = strcat(global_dataset, 'grasp_dataset/train_data.mat');
         validation_folder = strcat(global_dataset, 'grasp_dataset/validation_data.mat');
-        lambda = 1e-3;
+        lambda = 1e-3; % 1e-3 is optimal
         threshold = 0; %20; % basically working only on unsolvable problems ...
         %fail_thresh = 39;
 end
@@ -41,7 +46,6 @@ C_list = cell(1,B); % set of (relative to best choice at budget level) losses
 features_list = cell(1,B); % set of features 
 fraction_classified_list = zeros(1,B);
 S = zeros(N,B); % list predicted during training
-mode = 'query';
 % sumbodular function parameters
 submodular_fn_params.threshold = threshold;
 [submodular_fn_params.global_max_cost,submodular_fn_params.global_min_cost] = ...
@@ -57,8 +61,7 @@ for k = 1:B
 		fprintf('DEBUG: Fraction correctly classified at level %d: %.2f.\n',k-1,fraction_classified);
 	end
 	% get features for level k
-	features = conseqopt_features(train_data,S(:,1:k-1),mode); % features{i} is [L,d]
-% 	features = conseqopt_scp_features(train_data,S(:,1:k-1),mode); % features{i} is [L,d]
+	features = conseqopt_features(train_data,S(:,1:k-1),features_choice_struct); % features{i} is [L,d]
 	% train level k
 	% this function centers features
 	[weights,obj,wset] = train_linear_primal_sg(features, C,lambda,surrogate_loss);
@@ -79,10 +82,10 @@ C_sum = sum(C,2);
 fraction_classified = sum(C_sum == 0)/size(C,1);
 fprintf('DEBUG: Fraction correctly classified at level %d: %.2f.\n',B,fraction_classified);
 fraction_classified_list(end) = fraction_classified;
-return
+
 %% Validation
 load(validation_folder);
-S = predict_list_cs_classification(validation_data,weights_list,mode);
+S = predict_list_cs_classification(validation_data,weights_list,features_choice_struct);
 level_losses = evaluate_level_losses(validation_data,S,submodular_fn_params);
 for k = 1:length(level_losses)
 	fprintf('DEBUG: Loss at level %d: %.2f.\n',k,level_losses(k));
@@ -94,7 +97,7 @@ fprintf('Evaluation error: %f %f\n', e1, e2);
 %% Test
 % fprintf('Test data!!');
 % load(test_folder);
-% S = predict_list_cs_classification(test_data,weights_list,mode);
+% S = predict_list_cs_classification(test_data,weights_list,features_choice_struct);
 % level_losses = evaluate_level_losses(test_data,S,submodular_fn_params);
 % for k = 1:length(level_losses)
 % 	fprintf('DEBUG: Loss at level %d: %.2f.\n',k,level_losses(k));
