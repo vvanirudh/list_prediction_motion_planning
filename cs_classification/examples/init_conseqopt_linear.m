@@ -4,12 +4,12 @@
 clear;
 close all;
 
-set = 2;
+set = 1;
 B = 3; % budget
 surrogate_loss = 'hinge';
 % choices for features
 features_choice_struct.append_lib_contexts = 0;
-features_choice_struct.append_down_levels = 1;
+features_choice_struct.append_down_levels = 0;
 features_choice_struct.append_type = 'averaging'; % {differencing,averaging}
 
 global_dataset = getenv('DATASET');
@@ -21,7 +21,8 @@ switch(set)
         validation_folder = strcat(global_dataset, '2d_optimization_dataset/validation_data.mat');
         test_folder = strcat(global_dataset, '2d_optimization_dataset/test_data.mat');
 
-        lambdas = 1e3*ones(1,B);  
+%         lambdas = 10*ones(1,B);  
+        lambdas = [1000 0.001 100];
         %Validation statistics:
         %hinge: lambda 1e3 Budget 1: 0.1155 Budget 3: 0.0654  
         %square: lambda 1e2 Budget 1: 0.1172 Budget 3: 0.0662
@@ -33,7 +34,8 @@ switch(set)
         train_folder = strcat(global_dataset, 'grasp_dataset/train_data.mat');
         validation_folder = strcat(global_dataset, 'grasp_dataset/validation_data.mat');
         test_folder = strcat(global_dataset,'grasp_dataset/test_data.mat');
-        lambdas = 1e-3*ones(1,B); % 1e-3 is optimal
+%         lambdas = 1e-3*ones(1,B); 
+        lambdas = [100 0.001 10];
         cost_threshold = 0; %20; % basically working only on unsolvable problems ...
         %fail_thresh = 39;
 end

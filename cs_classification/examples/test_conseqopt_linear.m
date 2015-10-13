@@ -1,4 +1,4 @@
-function [e1,e2] = test_conseqopt(input_struct,weights_list)
+function [e1,e2] = test_conseqopt_linear(input_struct,weights_list)
     fprintf('Test.\n');
     features_choice_struct = input_struct.features_choice_struct;
     test_folder = input_struct.test_folder;

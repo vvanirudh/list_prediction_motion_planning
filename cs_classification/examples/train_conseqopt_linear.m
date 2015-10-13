@@ -1,4 +1,4 @@
-function weights_list = train_conseqopt(input_struct)
+function weights_list = train_conseqopt_linear(input_struct)
     fprintf('Training.\n');
     B = input_struct.B;
     surrogate_loss = input_struct.surrogate_loss;

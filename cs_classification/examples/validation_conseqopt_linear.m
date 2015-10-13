@@ -1,4 +1,4 @@
-function [e1,e2] = validation_conseqopt(input_struct,weights_list)
+function [e1,e2] = validation_conseqopt_linear(input_struct,weights_list)
     fprintf('Validation.\n');
     features_choice_struct = input_struct.features_choice_struct;
     validation_folder = input_struct.validation_folder;

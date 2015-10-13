@@ -1,15 +1,15 @@
 % initialize
 % all parameters should be set in this block
-clc;
-clear;
+% clc;
+% clear;
 close all;
 
-set = 2;
-B = 2; % budget length
+set = 1;
+B = 3; % budget length
 surrogate_loss = 'hinge';
 % choices for features
 features_choice_struct.append_lib_contexts = 0;
-features_choice_struct.append_down_levels = 1;
+features_choice_struct.append_down_levels = 0;
 features_choice_struct.append_type = 'averaging'; % {differencing,averaging}
 
 global_dataset = getenv('DATASET');
@@ -21,7 +21,7 @@ switch(set)
         validation_folder = strcat(global_dataset, '2d_optimization_dataset/validation_data.mat');
         test_folder = strcat(global_dataset, '2d_optimization_dataset/test_data.mat');
 
-        lambda = 1e3;  
+        lambda = 10;  
         %Validation statistics:
         %hinge: lambda 1e3 Budget 1: 0.1155 Budget 3: 0.0654  
         %square: lambda 1e2 Budget 1: 0.1172 Budget 3: 0.0662

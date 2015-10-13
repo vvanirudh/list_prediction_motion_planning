@@ -4,9 +4,9 @@ clear;
 close all;
 
 %% Which set do you want to run it for?
-set = 1;
-B = 2; % budget length
-surrogate_loss = 'square';
+set = 2;
+B = 3; % budget length
+surrogate_loss = 'hinge';
 
 %% 
 global_dataset = getenv('DATASET');
@@ -42,6 +42,7 @@ S = zeros(N,B); % list predicted during training
 submodular_fn_params.threshold = threshold;
 [submodular_fn_params.global_max_cost,submodular_fn_params.global_min_cost] = ...
 	get_global_cost_limits(train_data);
+
 [features, ~] = data_transform_multilinear_cs_classification(train_data);
 % train set of classifiers
 for k = 1:B
