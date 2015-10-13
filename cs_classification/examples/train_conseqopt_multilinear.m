@@ -37,7 +37,7 @@ function weights_list = train_conseqopt_multilinear(input_struct)
         end
         weights_list{k} = weights;
     end
-    
+        
     C = conseqopt_losses(train_data, S, submodular_fn_params); % size [N,L]
     C_sum = sum(C,2);
     fraction_classified = sum(C_sum == 0)/size(C,1);

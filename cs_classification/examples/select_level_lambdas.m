@@ -10,29 +10,29 @@ else
 end
 
 %% specify lambda values
-levelLambdaCell = cell(1,B);
+level_lambda_cell = cell(1,B);
 for k = 1:B
-    lambdaArray_b = 10.^[-3:3];
-    levelLambdaCell{k} = lambdaArray_b;
+    lambda_array_b = 10.^[-3:3];
+    level_lambda_cell{k} = lambda_array_b;
 end
-errorsCell = cell(1,B);
-lambdasOptimal = zeros(1,B);
+errors_cell = cell(1,B);
+lambdas_optimal = zeros(1,B);
 
 %% sweep
 clock_local = tic();
 for k = 1:B
     fprintf('Level %d.\n',k);
     input_struct.B = k;
-    lambdaArray_b = levelLambdaCell{k};
-    errorArray_b = zeros(size(lambdaArray_b));
-    for i = 1:length(lambdaArray_b)
-        input_struct.lambdas = [lambdasOptimal(1:k-1) lambdaArray_b(i)];
+    lambda_array_b = level_lambda_cell{k};
+    errorArray_b = zeros(size(lambda_array_b));
+    for i = 1:length(lambda_array_b)
+        input_struct.lambdas = [lambdas_optimal(1:k-1) lambda_array_b(i)];
         weights_list = train_conseqopt(input_struct);
         [errorArray_b(i),~] = validation_conseqopt(input_struct,weights_list);
     end
-    errorsCell{k} = errorArray_b;
+    errors_cell{k} = errorArray_b;
     [~,min_id] = min(errorArray_b);
-    lambdasOptimal(k) = lambdaArray_b(min_id);
+    lambdas_optimal(k) = lambda_array_b(min_id);
 end
 fprintf('Computation took %.2fs\n',toc(clock_local));
 

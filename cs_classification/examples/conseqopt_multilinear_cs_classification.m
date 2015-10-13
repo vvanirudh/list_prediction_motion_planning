@@ -1,11 +1,11 @@
 %% initialize
-clc;
-clear;
+% clc;
+% clear;
 close all;
 
 %% Which set do you want to run it for?
-set = 2;
-B = 3; % budget length
+set = 1;
+B = 1; % budget length
 surrogate_loss = 'hinge';
 
 %% 
@@ -16,7 +16,7 @@ switch(set)
         fprintf('Planner dataset \n');
         train_folder = strcat(global_dataset, 'planner_dataset/train_data.mat');
         validation_folder = strcat(global_dataset, 'planner_dataset/validation_data.mat');
-        lambda = 1e-3;
+        lambda = 1e3;
         threshold = 0; %local minima in thresh
         fail_thresh = 17.9;
     case 2
@@ -44,6 +44,7 @@ submodular_fn_params.threshold = threshold;
 	get_global_cost_limits(train_data);
 
 [features, ~] = data_transform_multilinear_cs_classification(train_data);
+
 % train set of classifiers
 for k = 1:B
 	% get losses for level k

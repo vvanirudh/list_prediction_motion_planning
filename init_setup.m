@@ -39,5 +39,9 @@ old_folder = cd('scp');
 run init_setup;
 cd(old_folder);
 
+old_folder = cd('seqopt');
+run init_setup;
+cd(old_folder);
+
 addpath(genpath(strcat(pwd,'/feature_extraction')));
 addpath(genpath(strcat(pwd,'/utils')));

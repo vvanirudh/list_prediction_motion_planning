@@ -4,7 +4,7 @@
 clear;
 close all;
 
-set = 1;
+set = 2;
 B = 3; % budget
 surrogate_loss = 'hinge';
 % choices for features
@@ -21,9 +21,8 @@ switch(set)
         validation_folder = strcat(global_dataset, '2d_optimization_dataset/validation_data.mat');
         test_folder = strcat(global_dataset, '2d_optimization_dataset/test_data.mat');
 
-%         lambdas = 10*ones(1,B);  
-        lambdas = [1000 0.001 100];
-        %Validation statistics:
+        lambdas = 10*ones(1,B);
+       %Validation statistics:
         %hinge: lambda 1e3 Budget 1: 0.1155 Budget 3: 0.0654  
         %square: lambda 1e2 Budget 1: 0.1172 Budget 3: 0.0662
         cost_threshold = 0; %1.4; %local minima in thresh
@@ -34,8 +33,7 @@ switch(set)
         train_folder = strcat(global_dataset, 'grasp_dataset/train_data.mat');
         validation_folder = strcat(global_dataset, 'grasp_dataset/validation_data.mat');
         test_folder = strcat(global_dataset,'grasp_dataset/test_data.mat');
-%         lambdas = 1e-3*ones(1,B); 
-        lambdas = [100 0.001 10];
+        lambdas = 1e-3*ones(1,B); 
         cost_threshold = 0; %20; % basically working only on unsolvable problems ...
         %fail_thresh = 39;
 end

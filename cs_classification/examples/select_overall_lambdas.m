@@ -10,7 +10,7 @@ else
 end
 
 %% specify lambda values
-lambda_array = 10.^[-3:3];
+lambda_array = 10.^[4:9];
 error_array = zeros(size(lambda_array));
 
 %% sweep

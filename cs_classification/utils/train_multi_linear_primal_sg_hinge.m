@@ -8,7 +8,6 @@ function [w, obj, wset] = train_multi_linear_primal_sg_hinge(features,losses,lam
 % lambda   - Regularization constant.
 % 
 % weights  - Vector of size [dL,1]
-
 [N,L] = size(losses);
 d = size(features,1);
 

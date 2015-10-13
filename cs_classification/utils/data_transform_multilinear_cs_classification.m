@@ -14,6 +14,7 @@ for i = 1:n
     costs(i,:) = c;
     % add bias
 end
-features = [features; ones(1,n)];
+% features = [features; ones(1,n)];
+features = ones(1,n);
 
 end
