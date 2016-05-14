@@ -1,12 +1,11 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This repository is an implementation of the work described 
+'List Prediction Applied to Motion Planning', https://www.ri.cmu.edu/pub_files/2016/5/main1.pdf
 
-### What is this repository for? ###
+Datasets can be obtained from TODO.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+The repository contains algorithms for list prediction, which can be run on the datasets.
 
 ### How do I get set up? ###
 
@@ -17,13 +16,7 @@ This README would normally document whatever steps are necessary to get your app
 * How to run tests
 * Deployment instructions
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+Sanjiban Choudhury, sanjiban@cmu.edu, PhD student at RI, CMU
+Abhijeet Tallavajhula, atallav1@andrew.cmu.edu, PhD student at RI, CMU
