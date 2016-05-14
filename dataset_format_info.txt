@@ -1,0 +1,9 @@
+The number of training environments is N.
+The library is of length L.
+The feature dimension is d.
+
+data is a struct array of length N. data(i) has fields
+
+data(i).costs: [L,1] array of costs
+data(i).lib_contexts: [L,d1] array of library contexts
+data(i).query_contexts: [L,d2] array of query environment contexts
