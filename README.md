@@ -19,4 +19,5 @@ The repository contains algorithms for list prediction, which can be run on the 
 ### Who do I talk to? ###
 
 Sanjiban Choudhury, sanjiban@cmu.edu, PhD student at RI, CMU
+
 Abhijeet Tallavajhula, atallav1@andrew.cmu.edu, PhD student at RI, CMU
