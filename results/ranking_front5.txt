@@ -1,4 +1,0 @@
-Ranking error: 9.765364
-Evaluation error: 0.103920
-
-front 5 vs back 5

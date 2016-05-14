@@ -6,7 +6,6 @@ close all;
 set = 2;
 B = 1; % budget length
 
-
 global_dataset = getenv('DATASET');
 switch(set)
     case 1

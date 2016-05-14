@@ -4,9 +4,9 @@
 % clear;
 close all;
 
-set = 1;
+set = 1; % dataset
 B = 3; % budget length
-surrogate_loss = 'hinge';
+surrogate_loss = 'square'; % {hinge, square}
 % choices for features
 features_choice_struct.append_lib_contexts = 0;
 features_choice_struct.append_down_levels = 0;

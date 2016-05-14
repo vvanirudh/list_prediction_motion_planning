@@ -1,2 +1,0 @@
-RMSE: 0.278656
-Evaluation error: 0.106435
