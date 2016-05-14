@@ -4,12 +4,12 @@
 clear;
 close all;
 
-set = 2;
+set = 1;
 B = 3; % budget
 surrogate_loss = 'hinge';
 % choices for features
 features_choice_struct.append_lib_contexts = 0;
-features_choice_struct.append_down_levels = 0;
+features_choice_struct.append_down_levels = 1;
 features_choice_struct.append_type = 'averaging'; % {differencing,averaging}
 
 global_dataset = getenv('DATASET');
