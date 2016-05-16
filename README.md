@@ -7,7 +7,7 @@ https://www.ri.cmu.edu/pub_files/2016/5/main1.pdf
 ## Setup ##
 
 The datasets are too large for the repository. Download them from
-TODO
+https://www.dropbox.com/sh/l01oh2651f08pf3/AADG1ggmHQgBM8Jtm52ci-JVa?dl=0
 
 A global variable DATASET, needs to be set to the path of the datasets, for example
 >> setenv('DATASET', 'my/project/path/list_prediction_dataset/');
